@@ -161,22 +161,22 @@
                         <div class="card-header">
                             <ul class="nav nav-tabs card-header-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#">全部</a>
+                                    <a class="nav-link" :class="{ 'active' : visibility == 'all' }" @click="visibility = 'all'" href="#">全部</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link " href="#">進行中</a>
+                                    <a class="nav-link" :class="{ 'active' : visibility == 'active' }" @click="visibility = 'active'" href="#">進行中</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">已完成</a>
+                                    <a class="nav-link" :class="{ 'active' : visibility == 'completed' }" @click="visibility = 'completed'" href="#">已完成</a>
                                 </li>
                             </ul>
                         </div>
                         <ul class="list-group list-group-flush text-left">
-                            <li class="list-group-item" v-for="(item, idx) in todos">
+                            <li class="list-group-item" v-for="(item, idx) in filterTodos">
                                 <div class="d-flex">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="a1" v-model="item.isCompleted" :id="item.id">
-                                        <label class="form-check-label" :for="item.id">
+                                        <label class="form-check-label" :for="item.id" :class="{ 'completed' : item.isCompleted }">
                                           {{item.title}}
                                         </label>
                                     </div>
@@ -203,7 +203,8 @@
                                 id: "11",
                                 title: "Hello",
                                 isCompleted: false
-                            }]
+                            }],
+                            visibility: "all"
                         },
                         methods: {
                             addTodo: function() {
@@ -223,6 +224,31 @@
                             },
                             removeTodo: function(idx) {
                                 this.todos.splice(idx, 1);
+                            }
+                        },
+                        computed: {
+                            filterTodos: function() {
+                                if (this.visibility === "all") {
+                                    return this.todos;
+                                } else if (this.visibility === "active") {
+                                    var newTodos = [];
+                                    this.todos.forEach((item) => {
+                                        if (!item.isCompleted) {
+                                            newTodos.push(item);
+                                        }
+                                    });
+                                    return newTodos;
+                                } else if (this.visibility === "completed") {
+                                    var newTodos = [];
+                                    this.todos.forEach((item) => {
+                                        if (item.isCompleted) {
+                                            newTodos.push(item);
+                                        }
+                                    });
+                                    return newTodos;
+                                }
+
+                                return [];
                             }
                         }
                     });
