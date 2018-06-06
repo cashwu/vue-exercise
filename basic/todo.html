@@ -172,7 +172,7 @@
                             </ul>
                         </div>
                         <ul class="list-group list-group-flush text-left">
-                            <li class="list-group-item" v-for="item in todos">
+                            <li class="list-group-item" v-for="(item, idx) in todos">
                                 <div class="d-flex">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="a1" v-model="item.isCompleted" :id="item.id">
@@ -180,7 +180,7 @@
                                           {{item.title}}
                                         </label>
                                     </div>
-                                    <button type="button" class="close ml-auto" aria-label="Close">
+                                    <button type="button" class="close ml-auto" aria-label="Close" @click="removeTodo(idx)">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
@@ -207,7 +207,12 @@
                         },
                         methods: {
                             addTodo: function() {
-                                var value = this.newTodo;
+
+                                var value = this.newTodo.trim();
+                                if (!value) {
+                                    return;
+                                }
+
                                 var timestamp = Math.floor(Date.now());
                                 this.todos.push({
                                     id: timestamp,
@@ -215,6 +220,9 @@
                                     isCompleted: false
                                 });
                                 this.newTodo = "";
+                            },
+                            removeTodo: function(idx) {
+                                this.todos.splice(idx, 1);
                             }
                         }
                     });
