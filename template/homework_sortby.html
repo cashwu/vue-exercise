@@ -119,16 +119,19 @@
     <thead>
       <tr>
         <th>品名</th>
-        <th class="click">價格 
+        <th class="click" @click="sort('price')">價格 
           <!-- isReverse 為反轉 className -->
-          <span class="icon isReverse">
-            <i class=" fas fa-angle-up text-success"></i>
+          <span v-show="sortOrder == 1" class="icon isReverse">
+            <i class=" fas text-success fa-angle-down" ></i>
+          </span>
+          <span v-show="sortOrder == -1" class="icon isReverse">
+            <i class=" fas text-success fa-angle-up" ></i>
           </span>
         </th>
         <th class="click">到期日 
         </th>
       </tr>
-      <tr v-for="item in data">
+      <tr v-for="item in sortDataComputed">
         <td>{{ item.name }}</td>
         <td>{{ item.price }}</td>
         <td>{{ item.expiryDate }}</td>
@@ -180,9 +183,33 @@ var app = new Vue({
         expiryDate: 200
       }
     ],
+    sortColumn : "",
+    sortOrder : 1,
+    sortData: []
+  },
+  methods : {
+    sort : function(column){
+      var vm = this;
+
+      this.sortColumn = column;
+      this.sortOrder = this.sortOrder === 1 ? -1 : 1;
+
+      this.sortData = this.data.sort(function (a, b) {
+        // 抓出排序資料的值
+        a = a[vm.sortColumn];
+        b = b[vm.sortColumn];
+        // 回傳 1, 0, -1 來進行排列
+        // 詳細規則可參考 https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+        return (a === b ? 0 : a > b ? 1 : -1) * vm.sortOrder;
+      });
+    }
   },
   // 請在此撰寫 JavaScript
-  computed: {}
+  computed: {
+    sortDataComputed : function(){
+      return this.sortColumn === "" ? this.data :  this.sortData;
+    }
+  }
 });
 </script>
 
