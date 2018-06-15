@@ -180,7 +180,7 @@
                                           {{item.title}}
                                         </label>
                                     </div>
-                                    <button type="button" class="close ml-auto" aria-label="Close" @click="removeTodo(idx)">
+                                    <button type="button" class="close ml-auto" aria-label="Close" @click="removeTodo(item)">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
@@ -225,8 +225,21 @@
                                 });
                                 this.newTodo = "";
                             },
-                            removeTodo: function(idx) {
-                                this.todos.splice(idx, 1);
+                            removeTodo: function(todo) {
+
+                                var vm = this;
+                                // var newIdx = "";
+                                // vm.todos.forEach(function(item, key) {
+                                //     if(todo.id === item.id) {
+                                //         newIdx = item.id;
+                                //     }
+                                // });
+
+                                var newIdx = vm.todos.findIndex((item, key) => {
+                                    return item.id === todo.id;
+                                });
+
+                                this.todos.splice(newIdx, 1);
                             },
                             editTodo: function(item) {
                                 this.cacheTodo = item;
