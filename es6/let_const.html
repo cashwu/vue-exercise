@@ -106,26 +106,32 @@
 <script>
 // #1
 // 修改 var -> let
-var mom = '老媽';
-(function () {
-  console.log(mom);
-})();
+
+// console.log(mon);
+
+// var mom = '老媽';
+// (function () {
+//   console.log(mom);
+// })();
 
 // #2
 // 修改 var -> let
+// var => function scope
+// let => block scope
 // function varMing () {
-//   var ming = '小明';
+//   let ming = '小明';
 //   if (true) {
-//     var ming = '杰哥';  
+//     let ming = '杰哥';  
 //     // 這裡的 ming 依然是外層的小明，所以小明即將被取代
 //   }
 //   console.log(ming);  // '杰哥'
 // }
 
+// varMing();
 
 // #3
 // 修改 var -> let
-// for (var i = 0; i < 10; i++) {
+// for (let i = 0; i < 10; i++) {
 //   console.log(i);
 //   setTimeout(function () {
 //     console.log('這執行第' + i + '次');
@@ -135,6 +141,7 @@ var mom = '老媽';
 // #4
 // const
 // const ming = '鐵錚錚男子漢';
+// ming = "123"; // error
 
 // #5
 // const 與 物件
@@ -145,14 +152,20 @@ var mom = '老媽';
 // };
 // family.father = '爸爸';
 
+// console.log(family);
+// object by referrence
+
 // #6
 // 額外問題，不使用 let，上述答案如何解答
-// for (var i = 0; i < 10; i++) {
-//   console.log(i);
-//   setTimeout(function () {
-//     console.log('這執行第' + i + '次');
-//   }, 10);
-// }
+for (var i = 0; i < 10; i++) {
+  console.log(i);
+  (function(i) {
+    setTimeout(function () {
+      console.log('這執行第' + i + '次');
+    }, 10);
+  })(i);
+  
+}
 </script> 
         </div>
       </div>
