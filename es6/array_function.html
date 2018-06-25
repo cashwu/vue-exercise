@@ -119,10 +119,10 @@ const people = [
     name: '杰倫',
     money: 60000
   },
-  {
-    name: '老媽',
-    money: Infinity
-  }
+  // {
+  //   name: '老媽',
+  //   money: Infinity
+  // }
 ];
 
 // forEach 與 map
@@ -164,24 +164,44 @@ const people = [
 // 1. 找到金額 = 500 的物件
 // 2. 找到 > 5000 的物件
 
-const findPeople = people.find((item, index) => {
-  if(item.money === 500){
-    return true;
-  }
-});
+// const findPeople = people.find((item, index) => {
+//   if(item.money === 500){
+//     return true;
+//   }
+// });
 
-console.log(findPeople);
+// console.log(findPeople);
 
-// every
+// every (所有結果都為 true，return 才會是 true)
 // 1. 所有物件是否都超過 10000 元
 // 2. 是否所有物件超過 300 元
 
-// some
+// const ans = people.every((item, i) => {
+//   return item.money > 300;
+// });
+
+// console.log(ans);
+
+// some (部份結果為 true，return 才會是 true)
 // 1. 是否有物件超過 10000 元
 // 2. 是否有物件持有金額少於 300元
 
+const ans = people.some((item, i) => {
+  return item.money > 10000;
+});
+
+console.log(ans);
+
 // reduce
 // 去除掉老媽，請問剩下的人有多少錢？
+
+const newNumber = people.reduce((prev, item, index) => {
+  console.log(prev);
+  return prev + item.money;
+  return Math.max(prev, item.money);
+}, 0)
+
+console.log('newNumber', newNumber);
 
 </script> 
         </div>
