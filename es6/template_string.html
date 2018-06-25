@@ -102,6 +102,7 @@
   </ol>
 </div>
 
+<div id="app"></div>
 
 <script>
 // #1 樣板字串
@@ -120,14 +121,30 @@ const people = [
     friends: 0
   }
 ]
-let originString = '我叫做 ' + people[0].name;
-let originUl = '<ul>\
-  <li>我叫做 ' + people[0].name + '</li>\
-  <li>我叫做 ' + people[1].name + '</li>\
-  <li>我叫做 ' + people[2].name + '</li>\
-</ul>';
+// let originString = '我叫做 ' + people[0].name;
+// let originUl = '<ul>\
+//   <li>我叫做 ' + people[0].name + '</li>\
+//   <li>我叫做 ' + people[1].name + '</li>\
+//   <li>我叫做 ' + people[2].name + '</li>\
+// </ul>';
+
+let originString = `我叫做 ${people[0].name}`;
+let originUl = `<ul>
+  <li>我叫做 ${people[0].name}</li>
+  <li>我叫做 ${people[1].name}</li>
+  <li>我叫做 ${people[2].name}</li>
+</ul>`;
 
 console.log(originString, originUl);
+
+newUl = `
+<ul>
+  ${people.map(p => `<li>我叫做 ${p.name}</li>`).join('')}
+</ul>`;
+
+console.log(originString, newUl);
+
+$("#app").html(newUl)
 
 </script> 
         </div>
